@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "personal-assistant-on-django"
+name = "culinary-hub-recipe-site"
 version = "0.1.0"
 description = ""
 authors = ["Olga Mageria <olgamageria@gmail.com>"]
