@@ -1,4 +1,4 @@
 /Django.docx
 /.env
 /Culinary Hub - ТЗ.odt
-recipes/__pycache__/*
+recipes/__pycache__/
