@@ -3,7 +3,7 @@ from .models import Recipe
 
 
 class RecipeForm(ModelForm):
-    name = CharField(label='Name', required=True)
+    title = CharField(label='Title', required=True)
     description = CharField(label='Description', required=True)
     tag_field = CharField(label='Tags', required=False)
 

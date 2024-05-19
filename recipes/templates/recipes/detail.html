@@ -1,0 +1,9 @@
+{% extends "recipes/base.html" %}
+
+{% block content %}
+
+<h1>{{recipe.title}}</h1>
+<p>Description: <b>{{recipe.description}}</b></p>
+<p>Time of creation: <kbd>{{recipe.created_at}}</kbd></p>
+<p>Tags: <small> {{ recipe.tag_field }} </small></p>
+{% endblock %}
