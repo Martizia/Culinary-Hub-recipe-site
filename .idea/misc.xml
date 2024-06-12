@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Black">
+    <option name="enabledOnReformat" value="true" />
     <option name="sdkName" value="Poetry (Culinary-Hub-recipe-site)" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Poetry (Culinary-Hub-recipe-site)" project-jdk-type="Python SDK" />

@@ -6,7 +6,8 @@ from recipes.models import Recipe
 
 # Create your views here.
 def main(request):
-    return render(request, 'recipes/index.html')
+    recipes = Recipe.objects.all()
+    return render(request, 'recipes/index.html', {'recipes': recipes})
 
 
 def recipe(request):
@@ -28,3 +29,9 @@ def recipe(request):
 def detail(request, recipe_id):
     recipe_page = get_object_or_404(Recipe, pk=recipe_id)
     return render(request, 'recipes/detail.html', {'recipe': recipe_page})
+
+
+def delete(request, recipe_id):
+    recipe_page = get_object_or_404(Recipe, pk=recipe_id)
+    recipe_page.delete()
+    return redirect('recipes:main')

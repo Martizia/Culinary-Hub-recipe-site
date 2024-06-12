@@ -1,7 +1,32 @@
 {% extends "recipes/base.html" %}
 {% block content %}
-    <h2>Recipe list</h2>
+{% if user.is_authenticated %}
+<ul>
+        <li>Welcome <b>{{ user.username }}!</b></li>
+        <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
+    </ul>
+    {% else %}
+    <ul>
+        <li><a href="{% url 'users:signup' %}" role="button">Sign Up</a></li>
+        <li><a href="{% url 'users:login' %}" role="button">Login</a></li>
+    </ul>
+{% endif %}
+    <nav>
+        <ul>
+            <li><a href="{% url 'recipes:recipe' %}">Add new recipe</a></li>
+        </ul>
+        <ul>
+            <li>
+                <h2>Recipe list</h2>
+            </li>
+        </ul>
+    </nav>
     {% for recipe in recipes %}
-        <h3><a href="{% url 'recipes:recipe' %}">{{ recipe.title }}</a></h3>
+        <ul>
+            <li>
+                <a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a>
+                <a href="{% url 'recipes:delete' recipe.id %}" role="button" class="contrast"> Delete recipe </a>
+            </li>
+        </ul>
     {% endfor %}
 {% endblock %}
