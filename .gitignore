@@ -2,3 +2,4 @@
 /.env
 /Culinary Hub - ТЗ.odt
 recipes/__pycache__/
+users/__pycache__/
