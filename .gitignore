@@ -1,5 +1,8 @@
 /Django.docx
 /.env
 /Culinary Hub - ТЗ.odt
-recipes/__pycache__/
+recipes/__pycache__/*
 users/__pycache__/
+users/migrations/__pycache__/
+recipes/migrations/__pycache__/
+culinary_hub/__pycache__/
