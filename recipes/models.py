@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Tag(models.Model):
@@ -15,6 +16,7 @@ class Recipe(models.Model):
     created_at = models.DateTimeField(default=timezone.now, null=False)
     tag_field = models.CharField(max_length=100, null=False, default='recipe')
     tags = models.ManyToManyField(Tag, related_name='recipes')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.title

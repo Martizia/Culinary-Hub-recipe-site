@@ -47,3 +47,9 @@ def loginuser(request):
 def logoutuser(request):
     logout(request)
     return redirect(to='recipes:main')
+
+
+@login_required
+def profile(request):
+    return render(request, 'users/profile.html')
+

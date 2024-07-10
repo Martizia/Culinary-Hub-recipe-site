@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from recipes.forms import RecipeForm
 from recipes.models import Recipe
@@ -10,6 +11,7 @@ def main(request):
     return render(request, 'recipes/index.html', {'recipes': recipes})
 
 
+@login_required
 def recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST)
@@ -31,7 +33,11 @@ def detail(request, recipe_id):
     return render(request, 'recipes/detail.html', {'recipe': recipe_page})
 
 
+@login_required
 def delete(request, recipe_id):
     recipe_page = get_object_or_404(Recipe, pk=recipe_id)
     recipe_page.delete()
     return redirect('recipes:main')
+
+
+
