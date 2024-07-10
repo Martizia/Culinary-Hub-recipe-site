@@ -21,6 +21,9 @@ def recipe(request):
                 form.add_error('tag_field', 'Too many tags')
                 return render(request, 'recipes/recipe.html', {'form': form})
             form.save()
+            new_recipe = form.save(commit=False)
+            new_recipe.user = request.user
+            new_recipe.save()
             return redirect('recipes:main')
         else:
             return render(request, 'recipes/recipe.html', {'form': form})
