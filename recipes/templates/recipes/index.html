@@ -3,6 +3,7 @@
 {% if user.is_authenticated %}
 <ul>
         <li>Welcome <b>{{ user.username }}!</b></li>
+        <li><a href="{% url 'users:profile' %}" role="button">Profile</a></li>
         <li><a href="{% url 'users:logout' %}" role="button">Logout</a></li>
     </ul>
     {% else %}
