@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Profile
+from cloudinary.forms import CloudinaryFileField
 
 
 class RegisterForm(UserCreationForm):
@@ -26,6 +27,16 @@ class LoginForm(AuthenticationForm):
 
 
 class ProfileForm(forms.ModelForm):
+    avatar = CloudinaryFileField(
+        options={
+            "folder": "CulinaryHub/",
+            "crop": "limit",
+            "width": 250,
+            "height": 250,
+            "eager": [{"width": 250, "height": 250, "crop": "fill"}],
+        }
+    )
+
     class Meta:
         model = Profile
         fields = ["avatar"]

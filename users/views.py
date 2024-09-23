@@ -62,4 +62,11 @@ def profile(request):
     else:
         form = ProfileForm(instance=request.user.profile)
 
-    return render(request, "users/profile.html", {"profile_form": form})
+    context = {
+        "form": form,
+        "avatar_url": (
+            request.user.profile.avatar.url if request.user.profile.avatar else None
+        ),
+    }
+
+    return render(request, "users/profile.html", context)

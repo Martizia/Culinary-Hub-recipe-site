@@ -10,6 +10,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = CloudinaryField(
         "avatar",
+        folder="CulinaryHub/",
         default="https://res.cloudinary.com/dvex4uzyg/image/upload/fl_preserve_transparency/v1727104361/CulinaryHub/default_avatar_l48hpr.jpg",
     )
 
