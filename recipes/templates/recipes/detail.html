@@ -6,4 +6,7 @@
 <p>Description: <b>{{recipe.description}}</b></p>
 <p>Time of creation: <kbd>{{recipe.created_at}}</kbd></p>
 <p>Tags: <small> {{ recipe.tag_field }} </small></p>
+{% if user.is_authenticated %}
+<a href="{% url 'recipes:delete' recipe.id %}" role="button" class="contrast"> Delete recipe </a>
+{% endif %}
 {% endblock %}

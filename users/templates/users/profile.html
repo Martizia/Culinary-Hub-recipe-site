@@ -20,9 +20,11 @@
     <div class="form-row">
         <div class="col-md-5">
             <div class="form-group">
-                <label class="small mb-1">Change Avatar:</label>
+                <label class="small mb-1" for="{{ profile_form.avatar.id_for_label }}">Change Avatar:</label>
                 {{ profile_form.avatar }}
-                <span>{{ profile_form.errors.avatar }}</span>
+                {% if profile_form.avatar.errors %}
+                <span class="error">{{ profile_form.avatar.errors }}</span>
+                {% endif %}
             </div>
         </div>
     </div>

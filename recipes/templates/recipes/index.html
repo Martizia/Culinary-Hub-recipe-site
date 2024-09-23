@@ -1,27 +1,15 @@
 {% extends "recipes/base.html" %}
 {% block content %}
-    <nav>
-        {% if user.is_authenticated %}
-        <ul>
-            <li><a href="{% url 'recipes:recipe' %}">Add new recipe</a></li>
-        </ul>
-        {% endif %}
-        <ul>
-            <li>
-                <h2>Recipe list</h2>
-            </li>
-        </ul>
-    </nav>
-    {% for recipe in recipes %}
-        <ul>
-            <li>
-                <a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a>
-                {% if user.is_authenticated %}
-                <a href="{% url 'recipes:delete' recipe.id %}" role="button" class="contrast"> Delete recipe </a>
-                {% endif %}
-            </li>
-        </ul>
-    
-    {% endfor %}
-
+    <div class="column1">
+        {% for recipe in recipes %}
+            <ul>
+                <li>
+                    <a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a>
+                    
+                </li>
+            </ul>
+        {% endfor %}
+    </div>
+    <div class="column2">
+    </div>
 {% endblock %}

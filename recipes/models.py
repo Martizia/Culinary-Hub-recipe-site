@@ -14,8 +14,8 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100, null=False)
     description = models.TextField(null=False)
     created_at = models.DateTimeField(default=timezone.now, null=False)
-    tag_field = models.CharField(max_length=100, null=False, default='recipe')
-    tags = models.ManyToManyField(Tag, related_name='recipes')
+    tag_field = models.CharField(max_length=100, null=False, default="recipe")
+    tags = models.ManyToManyField(Tag, related_name="recipes")
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
@@ -23,7 +23,7 @@ class Recipe(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        tags = self.tag_field.split(',')
+        tags = self.tag_field.split(",")
         for tag_name in tags:
             tag_name = tag_name.strip()
             tag, _ = Tag.objects.get_or_create(name=tag_name)
@@ -32,9 +32,7 @@ class Recipe(models.Model):
 
 class Rating(models.Model):
     value = models.IntegerField(null=False)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ratings')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ratings")
 
     def __str__(self):
         return str(self.value)
-
-
