@@ -1,15 +1,11 @@
 {% extends "recipes/base.html" %}
 {% block content %}
-    <div class="column1">
-        {% for recipe in recipes %}
-            <ul>
-                <li>
-                    <a href="{% url 'recipes:detail' recipe.id %}">{{ recipe.title }}</a>
-                    
-                </li>
-            </ul>
-        {% endfor %}
-    </div>
-    <div class="column2">
-    </div>
+{% for recipe in recipes %}
+<div class="recipe-item">
+    {% if recipe.image %}
+    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+    {% endif %}
+    <h2 class="recipe-title">{{ recipe.title }}</h2>
+</div>
+{% endfor %}
 {% endblock %}

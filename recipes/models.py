@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 
 class Tag(models.Model):
@@ -13,6 +14,9 @@ class Tag(models.Model):
 class Recipe(models.Model):
     title = models.CharField(max_length=100, null=False)
     description = models.TextField(null=False)
+    image = CloudinaryField(
+        "image_recipe", null=False, folder="CulinaryHub/", default=""
+    )
     created_at = models.DateTimeField(default=timezone.now, null=False)
     tag_field = models.CharField(max_length=100, null=False, default="recipe")
     tags = models.ManyToManyField(Tag, related_name="recipes")

@@ -2,29 +2,32 @@
 
 {% block content %}
 
-<form method="POST" action="{% url 'recipes:recipe' %}">
+<form method="POST" action="{% url 'recipes:recipe' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div style="padding: 10px">
-        <label>Recipe title:
-            {{ form.title }}
-        </label>
-        <span>{{ form.errors.name }}</span>
+        <label for="{{ form.title.id_for_label }}">Recipe title:</label>
+        {{ form.title }}
+        <span>{{ form.title.errors }}</span>
     </div>
     <div style="padding: 10px">
-        <label> Recipe description:
-            {{ form.description }}
-        </label>
-        <span>{{ form.errors.description }}</span>
+        <label for="{{ form.description.id_for_label }}">Recipe description:</label>
+        {{ form.description }}
+        <span>{{ form.description.errors }}</span>
     </div>
     <div style="padding: 10px">
-        <label>Tags:
-            {{ form.tag_field }}
-        </label>
-        <span>{{ form.errors.tag_field }}</span>
+        <label for="{{ form.tag_field.id_for_label }}">Tags:</label>
+        {{ form.tag_field }}
+        <span>{{ form.tag_field.errors }}</span>
+    </div>
+    <div style="padding: 10px">
+        <label for="{{ form.image.id_for_label }}">Image:</label>
+        {{ form.image }}
+        <span>{{ form.image.errors }}</span>
     </div>
     <div class="grid">
         <button type="submit">Submit</button>
         <button type="reset" class="secondary">Reset</button>
     </div>
 </form>
+
 {% endblock %}
