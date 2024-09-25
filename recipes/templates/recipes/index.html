@@ -1,11 +1,18 @@
 {% extends "recipes/base.html" %}
 {% block content %}
-{% for recipe in recipes %}
-<div class="recipe-item">
-    {% if recipe.image %}
-    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
-    {% endif %}
-    <h2 class="recipe-title">{{ recipe.title }}</h2>
+<div class="column1">
+    <div class="last-3-recipes">
+        {% for recipe in recipes %}
+        <div class="recipe-item">
+            {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+            {% endif %}
+            <h2 class="recipe-title">{{ recipe.title }}</h2>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %}
+<div class="column2">
+    <p>Tag cloud</p>
+</div>
 {% endblock %}

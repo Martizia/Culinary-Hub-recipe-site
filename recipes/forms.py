@@ -13,10 +13,7 @@ class RecipeForm(ModelForm):
             "use_filename": True,
             "unique_filename": False,
             "overwrite": True,
-            "crop": "limit",
-            "width": 300,
-            "height": 300,
-            "eager": [{"width": 300, "height": 300, "crop": "fill"}],
+            "transformation": [{"width": 300, "height": 300, "crop": "fill"}],
         }
     )
 

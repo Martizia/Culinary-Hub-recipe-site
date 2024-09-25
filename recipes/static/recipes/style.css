@@ -80,21 +80,29 @@ a {
 }
 
 .row {
-    display: block;
+    display: flex;
 
 }
 
 .column1 {
     width: 66.66666667%;
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    display: block;
+    
 
 }
 
 .column2 {
     width: 33.33333333%;
 
+}
+
+.last-3-recipes {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.recipe-item {
+    width: 300px;
 }
 
 .quote {
