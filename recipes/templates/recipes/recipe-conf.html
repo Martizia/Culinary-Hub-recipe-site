@@ -2,7 +2,7 @@
 {% block content %}
     <div class="last-3-recipes">
         {% for recipe in recipes %}
-        <a  href="{% url 'recipes:detail' recipe.id %}">
+        <a href="{% url 'recipes:detail' recipe.id %}">
             <div class="recipe-item">
                 {% if recipe.image %}
                 <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
@@ -12,5 +12,4 @@
         </a>
         {% endfor %}
     </div>
-
 {% endblock %}

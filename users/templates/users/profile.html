@@ -6,46 +6,27 @@
     <h1>Profile page: {{user.username}}</h1>
     <img src="{{ user.profile.avatar.url }}" alt="avatar of user"/>
 </div>
+<div style="display: block;">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
-{% if messages %}
-<div>
-    {% for message in messages %}
-    <div {% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>{{ message }}</div>
-    {% endfor %}
-</div>
-{% endif %}
-
-<!-- <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label class="small mb-1" for="{{ profile_form.avatar.id_for_label }}">Change Avatar:</label>
-                {{ profile_form.avatar }}
-                {% if profile_form.avatar.errors %}
-                <span class="error">{{ profile_form.avatar.errors }}</span>
-                {% endif %}
-            </div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="{{ form.avatar.id_for_label }}">Change Avatar:</label>
+            {{ form.avatar }}
+            {% if form.avatar.errors %}
+            <div class="error">{{ form.avatar.errors }}</div>
+            {% endif %}
         </div>
-    </div>
-    <div class="grid">
-        <button type="submit">Save Changes</button>
-        <button type="reset" class="secondary">Reset</button>
-    </div>
-
-</form> -->
-
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="{{ form.avatar.id_for_label }}">Change Avatar:</label>
-        {{ form.avatar }}
-        {% if form.avatar.errors %}
-        <div class="error">{{ form.avatar.errors }}</div>
-        {% endif %}
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Save Changes</button>
-    </div>
-</form>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</div>
 {% endblock content %}

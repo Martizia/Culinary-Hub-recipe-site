@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 from recipes.forms import RecipeForm
 from recipes.models import Recipe
 
 
-# Create your views here.
+def is_staff(user):
+    return user.is_authenticated and user.is_staff
+
+
 def main(request):
-    recipes = Recipe.objects.all()
+    recipes = Recipe.objects.filter(confirmation=True)
     return render(request, "recipes/index.html", {"recipes": recipes})
 
 
@@ -37,7 +40,29 @@ def detail(request, recipe_id):
 
 
 @login_required
-def delete(request, recipe_id):
+def delete_main(request, recipe_id):
     recipe_page = get_object_or_404(Recipe, pk=recipe_id)
     recipe_page.delete()
     return redirect("recipes:main")
+
+
+@login_required
+def delete_conf(request, recipe_id):
+    recipe_page = get_object_or_404(Recipe, pk=recipe_id)
+    recipe_page.delete()
+    return redirect("recipes:recipe_confirmation")
+
+
+@user_passes_test(is_staff)
+@login_required
+def recipe_conf(request):
+    recipes = Recipe.objects.filter(confirmation=False)
+    return render(request, "recipes/recipe-conf.html", {"recipes": recipes})
+
+
+@login_required
+def confirm(request, recipe_id):
+    recipe_page = get_object_or_404(Recipe, pk=recipe_id)
+    recipe_page.confirmation = True
+    recipe_page.save()
+    return redirect("recipes:recipe_confirmation")

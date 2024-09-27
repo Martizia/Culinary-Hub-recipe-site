@@ -33,11 +33,21 @@
                 {% if user.is_authenticated %}                
                 <li><a href="{% url 'recipes:recipe' %}">Add new recipe</a></li>
                 <li class="dash">|</li>
+                {% if user.is_staff %}
+                <li><a href="{% url 'recipes:recipe_confirmation' %}">Confirm  recipes</a></li>
+                <li  class="dash">|</li>
+                {% endif %}
                 {% endif %}                
             </ul>
         </div>
         <div class="row">
-            {% block content %} {% endblock %}
+            <div class="column1">
+                {% block content %} {% endblock %}
+            </div>
+            <div class="column2">
+                <p>Tag cloud</p>
+            </div>
+            
         </div>
     </div>
 </main>
