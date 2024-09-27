@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-
+from django.db.models import Count
 from recipes.forms import RecipeForm
-from recipes.models import Recipe
+from recipes.models import Recipe, Tag
 
 
 def is_staff(user):
@@ -66,3 +66,14 @@ def confirm(request, recipe_id):
     recipe_page.confirmation = True
     recipe_page.save()
     return redirect("recipes:recipe_confirmation")
+
+
+def recipe_list(request, tag_slug=None):
+    recipes = Recipe.objects.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        recipes = recipes.filter(tags=tag)
+
+    return render(request, "recipes/recipe_list.html", {"recipes": recipes, "tag": tag})

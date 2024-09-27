@@ -45,7 +45,13 @@
                 {% block content %} {% endblock %}
             </div>
             <div class="column2">
-                <p>Tag cloud</p>
+                <div class="tag-cloud">
+                    {% for tag in tags %}
+                    <a href="{% url 'recipes:tag' tag.slug %}" style="font-size: {{ tag.size }}em;">
+                        {{ tag.name }}
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
             
         </div>

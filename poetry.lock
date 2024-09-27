@@ -197,6 +197,20 @@ docs = ["furo (>=2021.8.17b43,<2021.9.dev0)", "sphinx (>=3.5.0)", "sphinx-notfou
 testing = ["coverage[toml] (>=5.0a4)", "pytest (>=4.6.11)"]
 
 [[package]]
+name = "django-taggit"
+version = "6.0.0"
+description = "django-taggit is a reusable Django application for simple tagging."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_taggit-6.0.0-py3-none-any.whl", hash = "sha256:7094f797b7e5e3727525a0af7bc550860000ddc2248266529d568eca61b39fb1"},
+    {file = "django_taggit-6.0.0.tar.gz", hash = "sha256:723d98bd5c536daa3c0e1bdae0965f7005a9b15269816bb4053fafec4ebad57e"},
+]
+
+[package.dependencies]
+Django = ">=4.1"
+
+[[package]]
 name = "djangorestframework"
 version = "3.15.2"
 description = "Web APIs for Django, made easy."
@@ -491,4 +505,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "7e351d3c1436b6169cf6da75d8984d746dde94543ce9feee85863da8427dd0d0"
+content-hash = "ce3a72f39ae1526aca821db31c91fedfe1fc844b466e18eb156ca654575e2626"
