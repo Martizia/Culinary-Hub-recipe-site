@@ -6,6 +6,29 @@
 <p>Description: <b>{{recipe.description}}</b></p>
 <p>Time of creation: <kbd>{{recipe.created_at}}</kbd></p>
 <p>Tags: <small> {{ recipe.tag_field }} </small></p>
+
+<div class="average-rating">
+    Average Rating: {% include 'recipes/stars.html' with rating=recipe.average_rating %}
+</div>
+
+{% if user.is_authenticated and user != recipe.user %}
+    {% if not user_has_rated %}
+        <form method="post" action="{% url 'recipes:rate_recipe' recipe.id %}">
+            {% csrf_token %}
+            <label for="rating">Rate this recipe:</label>
+            <select name="rating" id="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <button type="submit">Submit Rating</button>
+        </form>
+    {% endif %}
+{% endif %}
+
+
 {% if user.is_authenticated and user.is_staff %}
     {% if recipe.confirmation == False %}
     <a href="{% url 'recipes:confirm'  recipe.id %}" role="button">CONFIRM</a>

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.db.models import Count
+from django.db.models import Avg, Count
 from recipes.forms import RecipeForm
-from recipes.models import Recipe, Tag
+from recipes.models import Recipe, Tag, Rating
 
 
 def is_staff(user):
@@ -10,8 +10,29 @@ def is_staff(user):
 
 
 def main(request):
-    recipes = Recipe.objects.filter(confirmation=True)
-    return render(request, "recipes/index.html", {"recipes": recipes})
+    # Get the 3 most recently added recipes
+    latest_recipes = Recipe.objects.filter(confirmation=True).order_by("-created_at")[
+        :3
+    ]
+
+    # Get the 3 highest rated recipes
+    top_rated_recipes = (
+        Recipe.objects.filter(confirmation=True)
+        .annotate(avg_rating=Avg("rating__value"), num_ratings=Count("rating"))
+        .filter(num_ratings__gt=0)
+        .order_by("-avg_rating")[:3]
+    )
+
+    context = {
+        "latest_recipes": latest_recipes,
+        "top_rated_recipes": top_rated_recipes,
+    }
+    return render(request, "recipes/index.html", context)
+
+
+# def main(request):
+#     recipes = Recipe.objects.filter(confirmation=True)
+#     return render(request, "recipes/index.html", {"recipes": recipes})
 
 
 @login_required
@@ -34,9 +55,21 @@ def recipe(request):
     return render(request, "recipes/recipe.html", {"form": RecipeForm()})
 
 
+# def detail(request, recipe_id):
+#     recipe_page = get_object_or_404(Recipe, pk=recipe_id)
+#     return render(request, "recipes/detail.html", {"recipe": recipe_page})
+
+
 def detail(request, recipe_id):
-    recipe_page = get_object_or_404(Recipe, pk=recipe_id)
-    return render(request, "recipes/detail.html", {"recipe": recipe_page})
+    recipe_page = get_object_or_404(Recipe, id=recipe_id)
+    user_has_rated = False
+    if request.user.is_authenticated:
+        user_has_rated = Rating.objects.filter(
+            user=request.user, recipe=recipe_page
+        ).exists()
+
+    context = {"recipe": recipe_page, "user_has_rated": user_has_rated}
+    return render(request, "recipes/detail.html", context)
 
 
 @login_required
@@ -77,3 +110,19 @@ def recipe_list(request, tag_slug=None):
         recipes = recipes.filter(tags=tag)
 
     return render(request, "recipes/recipe_list.html", {"recipes": recipes, "tag": tag})
+
+
+@login_required
+def rate_recipe(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    if request.method == "POST" and request.user != recipe.user:
+        # Check if the user has already rated this recipe
+        existing_rating = Rating.objects.filter(
+            user=request.user, recipe=recipe
+        ).first()
+        if not existing_rating:
+            value = int(request.POST.get("rating", 0))
+            if 1 <= value <= 5:
+                Rating.objects.create(user=request.user, recipe=recipe, value=value)
+                recipe.update_average_rating()
+    return redirect("recipes:detail", recipe_id=recipe_id)

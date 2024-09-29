@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.utils.text import slugify
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Tag(models.Model):
@@ -34,9 +35,20 @@ class Recipe(models.Model):
     confirmation = models.BooleanField(default=False)
     tags = models.ManyToManyField(Tag, related_name="recipes")
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    average_rating = models.FloatField(
+        default=0.00, validators=[MinValueValidator(0), MaxValueValidator(5)]
+    )
 
     def __str__(self):
         return self.title
+
+    def update_average_rating(self):
+        ratings = self.rating_set.all()
+        if ratings:
+            self.average_rating = sum(r.value for r in ratings) / len(ratings)
+        else:
+            self.average_rating = 0
+        self.save()
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
@@ -70,8 +82,12 @@ class Recipe(models.Model):
 
 
 class Rating(models.Model):
-    value = models.IntegerField(null=False)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name="ratings")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    recipe = models.ForeignKey("Recipe", on_delete=models.CASCADE)
+    value = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    created_at = models.DateTimeField(
+        default=timezone.now,
+    )
 
-    def __str__(self):
-        return str(self.value)
+    class Meta:
+        unique_together = ("user", "recipe")

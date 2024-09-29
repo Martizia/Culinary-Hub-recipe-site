@@ -96,9 +96,10 @@ a {
 
 }
 
-.last-3-recipes {
+.last-3-recipes, .top-3-recipes {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .recipe-item {
@@ -106,6 +107,12 @@ a {
     height: 400px;
     border: 0.5px solid #333333;
     box-shadow: 10px 10px 8px 2px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 10px;
+}
+
+.recipe-title {
+    margin-top: 10px;
 }
 
 .quote {
@@ -227,3 +234,15 @@ a {
         padding: 2px;
     }
 }
+
+.star {
+    font-size: 24px;
+    color: #ddd;
+    border: #36499f;
+}
+
+.star.filled {
+    color: #ecaa1f;
+    border: #36499f;
+}
+

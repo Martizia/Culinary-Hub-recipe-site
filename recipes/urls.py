@@ -20,4 +20,5 @@ urlpatterns = [
     ),
     path("recipes/recipe-confirmation/<int:recipe_id>/", views.confirm, name="confirm"),
     path("tag/<slug:tag_slug>/", views.recipe_list, name="tag"),
+    path("recipe/<int:recipe_id>/rate/", views.rate_recipe, name="rate_recipe"),
 ]

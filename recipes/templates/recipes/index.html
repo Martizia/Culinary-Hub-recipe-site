@@ -1,16 +1,30 @@
 {% extends "recipes/base.html" %}
 {% block content %}
-    <div class="last-3-recipes">
-        {% for recipe in recipes %}
-        <a  href="{% url 'recipes:detail' recipe.id %}">
-            <div class="recipe-item">
-                {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
-                {% endif %}
-                <h2 class="recipe-title">{{ recipe.title }}</h2>
-            </div>
-        </a>
-        {% endfor %}
-    </div>
+<h2>Latest Recipes</h2>
+<div class="last-3-recipes">
+    {% for recipe in latest_recipes %}
+    <a href="{% url 'recipes:detail' recipe.id %}">
+        <div class="recipe-item">
+            {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+            {% endif %}
+            <h3 class="recipe-title">{{ recipe.title }}</h3>            
+        </div>
+    </a>
+    {% endfor %}
+</div>
 
+<h2>Top Rated Recipes</h2>
+<div class="top-3-recipes">
+    {% for recipe in top_rated_recipes %}
+    <a href="{% url 'recipes:detail' recipe.id %}">
+        <div class="recipe-item">
+            {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+            {% endif %}
+            <h3 class="recipe-title">{{ recipe.title }}</h3>
+        </div>
+    </a>
+    {% endfor %}
+</div>
 {% endblock %}
